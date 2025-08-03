@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🌿 Indian Lilac (Neem) - AI Medicinal Guide</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 30px;
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-bottom: 10px;
+      color: #00FF7F;
+      text-shadow: 0px 0px 25px #00FF7F;
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+      0% { text-shadow: 0px 0px 10px #00FF7F; }
+      100% { text-shadow: 0px 0px 30px #00ffaa; }
+    }
+
+    img.leaf-img {
+      width: 320px;
+      border-radius: 15px;
+      margin: 20px 0;
+      box-shadow: 0 0 30px rgba(0, 255, 127, 0.6);
+      transition: transform 0.5s ease-in-out;
+    }
+
+    img.leaf-img:hover {
+      transform: scale(1.05) rotate(-3deg);
+    }
+
+    .ai-info {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 20px;
+      font-size: 1.2em;
+      line-height: 1.6;
+      box-shadow: 0 0 20px rgba(0, 255, 127, 0.4);
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .btn {
+      display: inline-block;
+      background: #00FF7F;
+      color: black;
+      padding: 12px 28px;
+      margin: 20px 10px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+      box-shadow: 0 0 20px rgba(0, 255, 127, 0.5);
+    }
+
+    .btn:hover {
+      background: #1effc5;
+      box-shadow: 0 0 25px #1effc5;
+      transform: scale(1.05);
+    }
+
+    .voice-btn {
+      background: #ffcc00;
+    }
+
+    .back-link {
+      display: block;
+      margin-top: 15px;
+      color: #00FF7F;
+      font-weight: bold;
+      text-decoration: none;
+    }
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Fun Facts Section */
+    .fun-facts {
+      margin-top: 40px;
+      padding: 25px;
+      border: 2px solid #00ff7f;
+      border-radius: 15px;
+      background: rgba(0, 255, 127, 0.05);
+      box-shadow: 0 0 20px rgba(0, 255, 127, 0.3);
+    }
+
+    .fun-facts h2 {
+      color: #00ffaa;
+      text-shadow: 0 0 10px #00ffaa;
+    }
+
+    .facts-list {
+      text-align: left;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .facts-list li {
+      margin: 10px 0;
+      font-size: 1.1em;
+    }
+
+    /* Benefits Cards */
+    .benefits-section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 40px;
+    }
+
+    .card {
+      width: 260px;
+      margin: 15px;
+      padding: 15px;
+      background: #111;
+      border: 2px solid #00ff7f;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 255, 127, 0.3);
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(0, 255, 127, 0.6);
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 14px;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🌿 Indian Lilac (Neem)</h1>
+    <img src="{{ url_for('static', filename='images/neem.jpg') }}" alt="Indian Lilac Leaf" class="leaf-img">
+
+    <div class="ai-info">
+      <p>{{ info }}</p>
+    </div>
+
+    <a href="#" class="btn voice-btn" onclick="playVoice()">🔊 Listen to AI Voice</a>
+    <a href="/" class="btn">⬅ Back to Camera</a>
+
+    <!-- Fun Facts Section -->
+    <div class="fun-facts">
+      <h2>🌱 Fun Facts About Neem</h2>
+      <ul class="facts-list">
+        <li>Neem leaves have antibacterial and antifungal properties.</li>
+        <li>It is used in Ayurveda for skin, hair, and immunity.</li>
+        <li>Neem oil is a natural pesticide and insect repellent.</li>
+      </ul>
+    </div>
+
+    <!-- Benefits Section -->
+    <div class="benefits-section">
+      <div class="card">
+        <img src="{{ url_for('static', filename='images/neem1.jpg') }}" alt="Neem Leaves">
+        <h3>🌿 Skin Benefits</h3>
+        <p>Neem is widely used to treat acne, scars, and infections.</p>
+      </div>
+
+      <div class="card">
+        <img src="{{ url_for('static', filename='images/neem2.jpg') }}" alt="Neem Oil">
+        <h3>💧 Neem Oil</h3>
+        <p>Neem oil is used for hair growth and scalp treatments.</p>
+      </div>
+
+      <div class="card">
+        <img src="{{ url_for('static', filename='images/neem3.jpg') }}" alt="Neem Remedies">
+        <h3>🌱 Medicinal Uses</h3>
+        <p>Neem leaves are consumed for immunity and detox benefits.</p>
+      </div>
+    </div>
+
+    <footer>
+      🌟 Developed by Om Panchal | Powered by AI Leaf Detection
+    </footer>
+  </div>
+
+  <script>
+    function playVoice() {
+      fetch('/play_voice?leaf=neem')
+        .then(response => response.json())
+        .then(data => {
+          const audio = new Audio(data.audio_url);
+          audio.play();
+        })
+        .catch(err => alert("Voice playback error!"));
+    }
+  </script>
+</body>
+</html>

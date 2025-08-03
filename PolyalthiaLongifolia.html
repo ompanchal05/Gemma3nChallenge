@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🌳 Polyalthia Longifolia (Ashoka Tree) - AI Medicinal Guide</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      color: #00e6e6;
+      text-shadow: 0px 0px 15px #00e6e6;
+    }
+
+    img.leaf-img {
+      width: 300px;
+      border-radius: 15px;
+      margin: 20px 0;
+      box-shadow: 0 0 30px rgba(0, 230, 230, 0.6);
+    }
+
+    .ai-info {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 20px;
+      font-size: 1.2em;
+      line-height: 1.6;
+      box-shadow: 0 0 15px rgba(0, 230, 230, 0.4);
+    }
+
+    .btn {
+      display: inline-block;
+      background: #00e6e6;
+      color: black;
+      padding: 12px 25px;
+      margin: 20px 10px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #33ffff;
+      box-shadow: 0 0 20px #33ffff;
+    }
+
+    .voice-btn {
+      background: #ffcc00;
+      color: black;
+    }
+
+    .back-link {
+      display: block;
+      margin-top: 15px;
+      color: #00e6e6;
+      font-weight: bold;
+      text-decoration: none;
+    }
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🌳 Polyalthia Longifolia (Ashoka Tree)</h1>
+    <img src="{{ url_for('static', filename='images/ashoka.jpg') }}" alt="Polyalthia Longifolia Leaf" class="leaf-img">
+    
+    <div class="ai-info">
+      <p>{{ info }}</p> <!-- AI-generated medicinal info from Gemma3n -->
+    </div>
+
+    <a href="#" class="btn voice-btn" onclick="playVoice()">🔊 Listen to AI Voice</a>
+    <a href="/" class="btn">⬅ Back to Camera</a>
+  </div>
+
+  <script>
+    function playVoice() {
+      fetch('/play_voice?ashoka')
+        .then(response => response.json())
+        .then(data => {
+          const audio = new Audio(data.audio_url);
+          audio.play();
+        });
+    }
+  </script>
+</body>
+</html>

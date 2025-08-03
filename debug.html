@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Information - AI Leaf Detection</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .status-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid #667eea;
+        }
+        .status-card.success {
+            border-left-color: #28a745;
+            background: #d4edda;
+        }
+        .status-card.error {
+            border-left-color: #dc3545;
+            background: #f8d7da;
+        }
+        .status-card.warning {
+            border-left-color: #ffc107;
+            background: #fff3cd;
+        }
+        .status-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .status-value {
+            font-size: 1.1em;
+            color: #666;
+        }
+        .training-images {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .image-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin: 5px 0;
+            background: white;
+            border-radius: 5px;
+            border-left: 3px solid #667eea;
+        }
+        .image-item.missing {
+            border-left-color: #dc3545;
+            background: #f8d7da;
+        }
+        .image-item.small {
+            border-left-color: #ffc107;
+            background: #fff3cd;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px 5px;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: #5a6fd8;
+        }
+        .btn-secondary {
+            background: #6c757d;
+        }
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        .actions {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Debug Information</h1>
+        
+        <div class="status-grid">
+            <div class="status-card {% if debug_info.camera_status == 'Connected' %}success{% else %}error{% endif %}">
+                <div class="status-title">📹 Camera Status</div>
+                <div class="status-value">{{ debug_info.camera_status }}</div>
+            </div>
+            
+            <div class="status-card {% if debug_info.model_status == 'Ready' %}success{% else %}error{% endif %}">
+                <div class="status-title">🤖 ML Model Status</div>
+                <div class="status-value">{{ debug_info.model_status }}</div>
+            </div>
+            
+            <div class="status-card {% if debug_info.scaler_status == 'Ready' %}success{% else %}error{% endif %}">
+                <div class="status-title">⚖️ Scaler Status</div>
+                <div class="status-value">{{ debug_info.scaler_status }}</div>
+            </div>
+            
+            <div class="status-card {% if debug_info.training_data_count > 0 %}success{% else %}error{% endif %}">
+                <div class="status-title">📊 Training Data</div>
+                <div class="status-value">{{ debug_info.training_data_count }} samples, {{ debug_info.unique_classes }} classes</div>
+            </div>
+        </div>
+        
+        <div class="training-images">
+            <h3>📸 Training Images</h3>
+            {% for image in debug_info.training_images %}
+            <div class="image-item {% if not image.exists %}missing{% elif image.size_kb < 1 %}small{% endif %}">
+                <div>
+                    <strong>{{ image.name }}</strong>
+                    {% if image.exists %}
+                        <br><small>{{ image.size_kb }} KB</small>
+                    {% else %}
+                        <br><small style="color: #dc3545;">Missing</small>
+                    {% endif %}
+                </div>
+                <div>
+                    {% if image.exists %}
+                        {% if image.size_kb < 1 %}
+                            <span style="color: #ffc107;">⚠️ Too small</span>
+                        {% else %}
+                            <span style="color: #28a745;">✅ OK</span>
+                        {% endif %}
+                    {% else %}
+                        <span style="color: #dc3545;">❌ Missing</span>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="actions">
+            <a href="/" class="btn">🏠 Home</a>
+            <a href="/restart_camera" class="btn btn-secondary">🔄 Restart Camera</a>
+            <a href="/create_training_data" class="btn btn-secondary">📸 Create Training Data</a>
+        </div>
+        
+        <div style="margin-top: 30px; padding: 20px; background: #e3f2fd; border-radius: 10px;">
+            <h4>🔍 Troubleshooting Tips:</h4>
+            <ul>
+                <li><strong>Camera not connected:</strong> Check if your webcam is working and not being used by another application</li>
+                <li><strong>Model not ready:</strong> You need training images. Use the "Create Training Data" button</li>
+                <li><strong>Images too small:</strong> Training images should be at least 1KB. Use real photos, not placeholder files</li>
+                <li><strong>No detection:</strong> Make sure you're holding leaves in good lighting and the leaves are clearly visible</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html> 

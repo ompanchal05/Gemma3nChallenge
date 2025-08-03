@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ leaf }} Information</title>
+    <style>
+        body {
+            margin: 0;
+            background: radial-gradient(circle at top, #000000, #101010, #1c1c1c);
+            color: #00ff7f;
+            font-family: 'Segoe UI', sans-serif;
+            text-align: center;
+            padding: 30px;
+            overflow-x: hidden;
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 25px #00ff7f;
+            animation: glow 2s infinite alternate;
+        }
+        @keyframes glow {
+            0% { text-shadow: 0 0 10px #00ff7f; }
+            100% { text-shadow: 0 0 30px #00ffaa; }
+        }
+        p {
+            font-size: 1.2rem;
+            max-width: 900px;
+            margin: auto;
+            text-align: justify;
+            line-height: 1.6;
+        }
+        .btn-container {
+            margin-top: 30px;
+        }
+        .btn {
+            margin: 10px;
+            padding: 14px 25px;
+            background: #00ff7f;
+            border: none;
+            font-size: 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0px 0px 20px rgba(0, 255, 127, 0.6);
+        }
+        .btn:hover {
+            background: #00cc66;
+            transform: scale(1.1);
+            box-shadow: 0px 0px 30px rgba(0, 255, 127, 1);
+        }
+        .fun-facts {
+            margin-top: 40px;
+            padding: 20px;
+            border: 2px solid #00ff7f;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 255, 127, 0.3);
+            background: rgba(0, 255, 127, 0.05);
+        }
+        .fun-facts h2 {
+            color: #00ffaa;
+            text-shadow: 0 0 10px #00ffaa;
+        }
+        .facts-list {
+            text-align: left;
+            max-width: 600px;
+            margin: auto;
+        }
+        .facts-list li {
+            margin: 8px 0;
+        }
+        .leaf-cards {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+        .card {
+            width: 250px;
+            margin: 15px;
+            padding: 15px;
+            background: #111;
+            border: 2px solid #00ff7f;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 255, 127, 0.3);
+            transition: 0.3s;
+        }
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(0, 255, 127, 0.6);
+        }
+        .card img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        footer {
+            margin-top: 50px;
+            font-size: 14px;
+            opacity: 0.7;
+        }
+        .animate-fade {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s forwards;
+        }
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1 class="animate-fade">{{ leaf }} – Detailed Information</h1>
+
+    <p class="animate-fade" style="animation-delay: 0.3s;">{{ info }}</p>
+
+    <div class="btn-container animate-fade" style="animation-delay: 0.6s;">
+        <button class="btn" onclick="window.location.href='/'">⬅ Back to Camera</button>
+        <button class="btn" onclick="speakInfo()">🔊 Read Info</button>
+    </div>
+
+    <div class="fun-facts animate-fade" style="animation-delay: 0.9s;">
+        <h2>🌿 Fun Facts about {{ leaf }}</h2>
+        <ul class="facts-list">
+            <li>💡 {{ leaf }} has been used in traditional medicine for centuries.</li>
+            <li>🍃 It plays an important role in environmental balance.</li>
+            <li>🌱 Rich in natural compounds that may have health benefits.</li>
+        </ul>
+    </div>
+
+    <div class="leaf-cards animate-fade" style="animation-delay: 1.2s;">
+        <div class="card">
+            <img src="/static/images/holy_basil_1.jpg" alt="Holy Basil">
+            <h3>Holy Basil</h3>
+            <p>Known as Tulsi, it has strong medicinal properties.</p>
+        </div>
+        <div class="card">
+            <img src="/static/images/indian_lilac_1.jpg" alt="Indian Lilac">
+            <h3>Indian Lilac</h3>
+            <p>Neem leaves are widely used for skincare and immunity.</p>
+        </div>
+        <div class="card">
+            <img src="/static/images/polyalthia_longifolia_1.jpg" alt="Polyalthia">
+            <h3>Polyalthia Longifolia</h3>
+            <p>Often planted as an ornamental tree for landscaping.</p>
+        </div>
+    </div>
+
+    <footer class="animate-fade" style="animation-delay: 1.5s;">
+        🌟 Developed by Om Panchal | Powered by AI Leaf Detection
+    </footer>
+
+    <script>
+        function speakInfo() {
+            const text = "{{ info }}";
+            const speech = new SpeechSynthesisUtterance(text);
+            speech.lang = "en-US";
+            speech.pitch = 1;
+            speech.rate = 1;
+            speech.volume = 1;
+            speechSynthesis.speak(speech);
+        }
+    </script>
+</body>
+</html>
