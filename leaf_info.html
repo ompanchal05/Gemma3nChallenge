@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ leaf }} - Detailed Information | AI Leaf Detection</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #000000 0%, #0a0a0a 25%, #1a1a1a 50%, #0a0a0a 75%, #000000 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(0, 255, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 255, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(0, 255, 0, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Header with 3D effect */
+        .header {
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(20px);
+            padding: 20px 0;
+            border-bottom: 3px solid #00ff00;
+            box-shadow: 0 4px 20px rgba(0, 255, 0, 0.3);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #00ff00;
+            text-shadow: 0 0 20px #00ff00;
+        }
+
+        .back-btn {
+            background: linear-gradient(45deg, #00ff00, #00cc00);
+            color: #000;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            transform: scale(1);
+            box-shadow: 0 5px 15px rgba(0, 255, 0, 0.3);
+        }
+
+        .back-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 255, 0, 0.5);
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Leaf Header with 3D effect */
+        .leaf-header {
+            text-align: center;
+            margin-bottom: 50px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 25px;
+            padding: 40px;
+            border: 3px solid #00ff00;
+            box-shadow: 
+                0 0 40px rgba(0, 255, 0, 0.4),
+                inset 0 0 40px rgba(0, 255, 0, 0.1);
+            position: relative;
+            transform: perspective(1000px) rotateX(2deg);
+            transition: transform 0.3s ease;
+        }
+
+        .leaf-header:hover {
+            transform: perspective(1000px) rotateX(0deg) scale(1.02);
+        }
+
+        .leaf-header::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #00ff00, #00cc00, #00ff00);
+            border-radius: 25px;
+            z-index: -1;
+            animation: borderGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes borderGlow {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .leaf-title {
+            font-size: 52px;
+            font-weight: bold;
+            color: #00ff00;
+            text-shadow: 0 0 25px #00ff00;
+            margin-bottom: 20px;
+            transform: scale(1);
+            transition: transform 0.3s ease;
+        }
+
+        .leaf-title:hover {
+            transform: scale(1.05);
+        }
+
+        .leaf-subtitle {
+            font-size: 20px;
+            opacity: 0.8;
+            margin-bottom: 25px;
+            color: #b0c4de;
+        }
+
+        .ai-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .ai-btn {
+            background: linear-gradient(45deg, #00ff00, #00cc00);
+            color: #000;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            transform: scale(1);
+            box-shadow: 0 5px 15px rgba(0, 255, 0, 0.3);
+        }
+
+        .ai-btn:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 10px 25px rgba(0, 255, 0, 0.5);
+        }
+
+        /* Content Grid with 3D cards */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .info-card {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 20px;
+            padding: 30px;
+            border: 2px solid #00ff00;
+            transition: all 0.3s ease;
+            transform: perspective(1000px) rotateY(0deg);
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.2);
+            position: relative;
+        }
+
+        .info-card:hover {
+            transform: perspective(1000px) rotateY(-5deg) translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 123, 255, 0.3);
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(0, 255, 0, 0.05) 50%, transparent 70%);
+            border-radius: 20px;
+            animation: scanLine 3s linear infinite;
+        }
+
+        @keyframes scanLine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #00ff00, #00cc00);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+        }
+
+        .card-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #00ff00;
+            text-shadow: 0 0 15px #00ff00;
+        }
+
+        .card-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .info-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .info-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0, 255, 0, 0.2);
+            position: relative;
+            padding-left: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .info-list li:hover {
+            background: rgba(0, 255, 0, 0.1);
+            transform: translateX(5px);
+        }
+
+        .info-list li::before {
+            content: '🌿';
+            position: absolute;
+            left: 0;
+            top: 12px;
+            font-size: 16px;
+        }
+
+        .info-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* AI Assistant with 3D effect */
+        .ai-assistant {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(0, 0, 0, 0.95);
+            border-radius: 25px;
+            padding: 25px;
+            width: 380px;
+            border: 3px solid #00ff00;
+            box-shadow: 
+                0 0 40px rgba(0, 255, 0, 0.5),
+                0 20px 40px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            transform: translateY(100%) perspective(1000px) rotateX(10deg);
+            transition: transform 0.5s ease;
+            backdrop-filter: blur(20px);
+        }
+
+        .ai-assistant.active {
+            transform: translateY(0) perspective(1000px) rotateX(0deg);
+        }
+
+        .ai-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .ai-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #00ff00;
+            text-shadow: 0 0 15px #00ff00;
+        }
+
+        .ai-controls {
+            display: flex;
+            gap: 12px;
+        }
+
+        .ai-btn {
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            transform: scale(1);
+        }
+
+        .ai-btn:hover {
+            background: linear-gradient(45deg, #0056b3, #007bff);
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
+        }
+
+        .ai-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #00ff00, #00cc00);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px;
+            font-size: 28px;
+            animation: speak 1s infinite alternate;
+            box-shadow: 0 0 25px rgba(0, 255, 0, 0.5);
+        }
+
+        @keyframes speak {
+            0% { transform: scale(1) rotate(0deg); }
+            100% { transform: scale(1.1) rotate(5deg); }
+        }
+
+        .ai-speech {
+            background: rgba(0, 255, 0, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            font-size: 15px;
+            line-height: 1.5;
+            border: 1px solid rgba(0, 255, 0, 0.3);
+        }
+
+        /* Notifications with 3D effect */
+        .notification {
+            position: fixed;
+            top: 120px;
+            right: 20px;
+            background: linear-gradient(45deg, #00ff00, #00cc00);
+            color: #000;
+            padding: 20px 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            z-index: 1001;
+            transform: translateX(100%) perspective(1000px) rotateY(90deg);
+            transition: transform 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .notification.show {
+            transform: translateX(0) perspective(1000px) rotateY(0deg);
+        }
+
+        /* Floating particles effect */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #00ff00;
+            border-radius: 50%;
+            animation: float 6s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .leaf-title {
+                font-size: 36px;
+            }
+
+            .ai-assistant {
+                width: 90%;
+                right: 5%;
+                left: 5%;
+            }
+
+            .ai-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-leaf"></i> AI Leaf Detection
+            </div>
+            <a href="/" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Camera
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Leaf Header -->
+        <section class="leaf-header">
+            <h1 class="leaf-title">{{ leaf }}</h1>
+            <p class="leaf-subtitle">Comprehensive information about this amazing plant</p>
+            <div class="ai-controls">
+                <button class="ai-btn" onclick="toggleAI()">
+                    <i class="fas fa-robot"></i> AI Assistant
+                </button>
+                <button class="ai-btn" onclick="speakAboutLeaf()">
+                    <i class="fas fa-microphone"></i> Speak About Leaf
+                </button>
+                <button class="ai-btn" onclick="speakAdvantages()">
+                    <i class="fas fa-plus-circle"></i> Advantages
+                </button>
+                <button class="ai-btn" onclick="speakDisadvantages()">
+                    <i class="fas fa-minus-circle"></i> Disadvantages
+                </button>
+            </div>
+        </section>
+
+        <!-- Content Grid -->
+        <section class="content-grid">
+            {% if info %}
+            <div class="info-card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <h3 class="card-title">Overview</h3>
+                </div>
+                <div class="card-content">
+                    <p>{{ info }}</p>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if advantages %}
+            <div class="info-card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+                    <h3 class="card-title">Advantages</h3>
+                </div>
+                <div class="card-content">
+                    <ul class="info-list">
+                        {% for advantage in advantages %}
+                        <li>{{ advantage }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if disadvantages %}
+            <div class="info-card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-minus-circle"></i>
+                    </div>
+                    <h3 class="card-title">Disadvantages</h3>
+                </div>
+                <div class="card-content">
+                    <ul class="info-list">
+                        {% for disadvantage in disadvantages %}
+                        <li>{{ disadvantage }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if medicinal_uses %}
+            <div class="info-card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3 class="card-title">Medicinal Uses</h3>
+                </div>
+                <div class="card-content">
+                    <ul class="info-list">
+                        {% for use in medicinal_uses %}
+                        <li>{{ use }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if growing_tips %}
+            <div class="info-card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <h3 class="card-title">Growing Tips</h3>
+                </div>
+                <div class="card-content">
+                    <ul class="info-list">
+                        {% for tip in growing_tips %}
+                        <li>{{ tip }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
+        </section>
+    </div>
+
+    <!-- AI Assistant -->
+    <div class="ai-assistant" id="ai-assistant">
+        <div class="ai-header">
+            <div class="ai-title">
+                <i class="fas fa-robot"></i> AI Assistant
+            </div>
+            <div class="ai-controls">
+                <button class="ai-btn" onclick="toggleAI()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div class="ai-avatar" id="ai-avatar">
+            <i class="fas fa-robot"></i>
+        </div>
+        
+        <div class="ai-speech" id="ai-speech">
+            Hello! I can help you learn more about {{ leaf }}. Ask me anything about this amazing plant!
+        </div>
+        
+        <div class="ai-controls">
+            <button class="ai-btn" onclick="speakAboutLeaf()">
+                <i class="fas fa-microphone"></i> About {{ leaf }}
+            </button>
+            <button class="ai-btn" onclick="speakAdvantages()">
+                <i class="fas fa-plus-circle"></i> Advantages
+            </button>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification"></div>
+
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Global variables
+        let isAIActive = false;
+        const leafName = '{{ leaf }}';
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log(`🌿 Leaf Info Page - ${leafName} initialized`);
+            createParticles();
+        });
+
+        // AI Assistant Functions
+        function toggleAI() {
+            const aiAssistant = document.getElementById('ai-assistant');
+            isAIActive = !isAIActive;
+            
+            if (isAIActive) {
+                aiAssistant.classList.add('active');
+                showNotification('🤖 AI Assistant activated!');
+            } else {
+                aiAssistant.classList.remove('active');
+            }
+        }
+
+        function speakAboutLeaf() {
+            if (!isAIActive) {
+                toggleAI();
+            }
+            
+            const aiSpeech = document.getElementById('ai-speech');
+            const aiAvatar = document.getElementById('ai-avatar');
+            
+            aiSpeech.textContent = `Let me tell you about ${leafName}. This is a fascinating plant with many interesting properties and uses.`;
+            aiAvatar.style.animation = 'speak 0.5s infinite alternate';
+            
+            // Make AI speak via backend
+            fetch('/assistant/speak/text', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 
+                    text: `Let me tell you about ${leafName}. This is a fascinating plant with many interesting properties and uses.` 
+                })
+            }).then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    showNotification('🎤 AI is speaking about the leaf...');
+                }
+            }).catch(err => {
+                console.log('Speech error:', err);
+                showNotification('❌ Speech error occurred');
+            });
+            
+            // Stop animation after 3 seconds
+            setTimeout(() => {
+                aiAvatar.style.animation = '';
+            }, 3000);
+        }
+
+        function speakAdvantages() {
+            if (!isAIActive) {
+                toggleAI();
+            }
+            
+            const aiSpeech = document.getElementById('ai-speech');
+            const aiAvatar = document.getElementById('ai-avatar');
+            
+            aiSpeech.textContent = `${leafName} has many advantages including medicinal properties, environmental benefits, and practical uses.`;
+            aiAvatar.style.animation = 'speak 0.5s infinite alternate';
+            
+            // Make AI speak via backend
+            fetch('/assistant/speak/text', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 
+                    text: `${leafName} has many advantages including medicinal properties, environmental benefits, and practical uses.` 
+                })
+            }).then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    showNotification('🎤 AI is speaking about advantages...');
+                }
+            }).catch(err => {
+                console.log('Speech error:', err);
+                showNotification('❌ Speech error occurred');
+            });
+            
+            // Stop animation after 3 seconds
+            setTimeout(() => {
+                aiAvatar.style.animation = '';
+            }, 3000);
+        }
+
+        function speakDisadvantages() {
+            if (!isAIActive) {
+                toggleAI();
+            }
+            
+            const aiSpeech = document.getElementById('ai-speech');
+            const aiAvatar = document.getElementById('ai-avatar');
+            
+            aiSpeech.textContent = `While ${leafName} has many benefits, it's important to be aware of potential side effects and precautions.`;
+            aiAvatar.style.animation = 'speak 0.5s infinite alternate';
+            
+            // Make AI speak via backend
+            fetch('/assistant/speak/text', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 
+                    text: `While ${leafName} has many benefits, it's important to be aware of potential side effects and precautions.` 
+                })
+            }).then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    showNotification('🎤 AI is speaking about precautions...');
+                }
+            }).catch(err => {
+                console.log('Speech error:', err);
+                showNotification('❌ Speech error occurred');
+            });
+            
+            // Stop animation after 3 seconds
+            setTimeout(() => {
+                aiAvatar.style.animation = '';
+            }, 3000);
+        }
+
+        // Notification system
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Auto-show AI assistant on first visit
+        setTimeout(() => {
+            if (!isAIActive) {
+                showNotification('🤖 Welcome! Click "AI Assistant" to learn more about {{ leaf }}');
+            }
+        }, 3000);
+    </script>
+</body>
+</html> 

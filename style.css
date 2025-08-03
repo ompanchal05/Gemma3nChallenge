@@ -1,0 +1,115 @@
+/* 🌟 Futuristic AI Theme CSS */
+body {
+  background: radial-gradient(circle at top, #0f2027, #203a43, #2c5364);
+  color: white;
+  font-family: 'Segoe UI', sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+/* 🔥 Glowing Heading */
+h1 {
+  margin-top: 25px;
+  font-size: 2.8rem;
+  color: #00ffcc;
+  text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffaa, 0 0 30px #00ffcc;
+  animation: glow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffaa, 0 0 30px #00ffcc;
+  }
+  to {
+    text-shadow: 0 0 20px #00ffaa, 0 0 40px #00ffcc, 0 0 60px #00ffaa;
+  }
+}
+
+/* 🎥 Camera Preview */
+.camera img {
+  width: 550px;
+  max-width: 90%;
+  border-radius: 18px;
+  margin-top: 25px;
+  box-shadow: 0 0 25px #00ffcc, 0 0 40px rgba(0, 255, 204, 0.6);
+  transition: transform 0.4s ease-in-out;
+}
+
+.camera img:hover {
+  transform: scale(1.05) rotateY(3deg);
+  box-shadow: 0 0 40px #00ffaa, 0 0 60px rgba(0, 255, 170, 0.7);
+}
+
+/* 🤖 Futuristic Buttons */
+.btn {
+  background: linear-gradient(135deg, #00ffaa, #00ccff);
+  color: #000;
+  padding: 12px 28px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  box-shadow: 0 0 15px #00ffcc, 0 0 30px rgba(0, 255, 204, 0.5);
+  transition: all 0.3s ease-in-out;
+}
+
+.btn:hover {
+  background: linear-gradient(135deg, #00ccff, #00ffaa);
+  transform: scale(1.1);
+  box-shadow: 0 0 25px #00ffaa, 0 0 45px rgba(0, 255, 170, 0.8);
+}
+
+/* 🟢 AI Text Output */
+#ai-text {
+  margin-top: 18px;
+  font-size: 20px;
+  color: #fff;
+  padding: 10px 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 255, 204, 0.3);
+  max-width: 650px;
+  line-height: 1.6;
+}
+
+/* 🔄 AI Loader Animation */
+.loader {
+  display: none;
+  margin: 20px auto;
+  width: 60px;
+  height: 60px;
+  border: 6px solid #00ffaa;
+  border-top: 6px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 📱 Responsive Design */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 2rem;
+  }
+  .camera img {
+    width: 90%;
+  }
+  .btn {
+    font-size: 16px;
+    padding: 10px 20px;
+  }
+  #ai-text {
+    font-size: 16px;
+  }
+}
